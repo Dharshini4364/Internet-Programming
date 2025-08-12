@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Registration Form Validation</title>
+<meta charset="UTF-8">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #d9d9d9; /* Light gray background */
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 400px;
+        background: white;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+    }
+    h2 {
+        text-align: center;
+        color: #2c3e50; /* Dark heading color */
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+    }
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .gender-options input {
+        width: auto;
+        margin-right: 5px;
+    }
+    small {
+        color: red;
+        display: none;
+    }
+    button {
+        margin-top: 15px;
+        width: 100%;
+        padding: 10px;
+        background-color: #e67e22; /* Orange button */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    button:hover {
+        background-color: #d35400; /* Darker orange on hover */
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Event Registration Form</h2>
+    <form name="regForm" onsubmit="return validation(this)" autocomplete="off">
+        
+        <label>Full Name:</label>
+        <input type="text" id="username" name="fullname" placeholder="Enter Full Name">
+        <small id="nameError">Please enter a valid name</small>
+
+        <label>Gender:</label>
+        <div class="gender-options">
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <input type="radio" name="gender" value="Other"> Other
+        </div>
+        <small id="genderError">Please select your gender</small>
+
+        <label>Password:</label>
+        <input type="password" id="password" name="user_password" autocomplete="new-password" placeholder="Enter Password">
+
+        <label>Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="user_confirm_password" autocomplete="new-password" placeholder="Confirm Password">
+        <small id="passwordError">Passwords do not match</small>
+
+        <label>Email:</label>
+        <input type="email" id="email" name="user_email" placeholder="Enter Email">
+        <small id="emailError">Please enter a valid email</small>
+
+        <label>Phone Number:</label>
+        <input type="text" id="phone" name="user_phone" placeholder="Enter 10 digit Phone Number">
+        <small id="phoneError">Please enter a valid 10-digit phone number</small>
+
+        <label>Credit Card Number:</label>
+        <input type="text" id="creditCard" name="user_card" placeholder="Enter 16 digit Credit Card Number">
+        <small id="cardError">Please enter a valid 16-digit card number</small>
+
+        <label>Date of Birth:</label>
+        <input type="text" id="dob" name="user_dob" placeholder="DD/MM/YYYY">
+        <small id="dobError">Please enter your date of birth</small>
+
+        <label>Event Name:</label>
+        <select id="event" name="event_name">
+            <option value="">-- Select an Event --</option>
+            <option value="Technical Symposium">Technical Symposium</option>
+            <option value="Cultural Fest">Cultural Fest</option>
+            <option value="Workshop on AI">Workshop on AI</option>
+            <option value="Sports Meet">Sports Meet</option>
+        </select>
+        <small id="eventError">Please select an event</small>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+function validation(form) {
+    let valid = true;
+    document.querySelectorAll("small").forEach(el => el.style.display = "none");
+
+    let username = document.getElementById("username").value.trim();
+    let namePattern = /^[A-Za-z\s.]+$/;
+    if (!namePattern.test(username) || username === "") {
+        document.getElementById("nameError").style.display = "block";
+        valid = false;
+    }
+
+    let gender = document.querySelector('input[name="gender"]:checked');
+    if (!gender) {
+        document.getElementById("genderError").style.display = "block";
+        valid = false;
+    }
+
+    let password = document.getElementById("password").value.trim();
+    let confirmPassword = document.getElementById("confirmPassword").value.trim();
+    if (password !== confirmPassword || password === "") {
+        document.getElementById("passwordError").style.display = "block";
+        valid = false;
+    }
+
+    let email = document.getElementById("email").value.trim();
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById("emailError").style.display = "block";
+        valid = false;
+    }
+
+    let phone = document.getElementById("phone").value.trim();
+    if (!/^\d{10}$/.test(phone)) {
+        document.getElementById("phoneError").style.display = "block";
+        valid = false;
+    }
+
+    let creditCard = document.getElementById("creditCard").value.trim();
+    if (!/^\d{16}$/.test(creditCard)) {
+        document.getElementById("cardError").style.display = "block";
+        valid = false;
+    }
+
+    let dob = document.getElementById("dob").value.trim();
+    if (dob === "") {
+        document.getElementById("dobError").style.display = "block";
+        valid = false;
+    }
+
+    let event = document.getElementById("event").value;
+    if (event === "") {
+        document.getElementById("eventError").style.display = "block";
+        valid = false;
+    }
+
+    if (!valid) {
+        alert("⚠ Please fill in all required fields correctly before submitting.");
+        return false;
+    }
+
+    let today = new Date();
+    let dateStr = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+    alert("You have successfully registered for " + event + " on " + dateStr);
+    return true;
+}
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
